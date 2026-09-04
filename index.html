@@ -58,6 +58,12 @@
 
   .stock { font-size: 32px; font-weight: 600; }
 
+  .status {
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--quiet);
+  }
+
   .controls {
     display: flex;
     flex-direction: column;
@@ -134,6 +140,7 @@
   <div class="shelf">
     <div class="label">Apples</div>
     <div class="stock" id="stock"></div>
+    <div class="status" id="status"></div>
   </div>
 </main>
 
@@ -141,7 +148,6 @@
 
 <div class="controls">
   <button id="restock"></button>
-  <button id="sell"></button>
 </div>
 
 <script>
@@ -157,7 +163,7 @@
 // different address -- the reliable way past a cached copy.
 //
 // Bump VERSION on every deploy.
-const VERSION = '3';
+const VERSION = '4';
 
 async function checkForUpdate() {
   // If we already reloaded for this version, don't do it again: that would be
@@ -183,9 +189,13 @@ async function checkForUpdate() {
 
 // ---------------------------------------------------------------- config
 
-const RESTOCK_COST = 2;   // what we pay the supplier per apple
-const SELL_PRICE   = 3;   // what a customer pays us per apple
-const CAPACITY     = 8;   // how many apples fit on the shelf
+const RESTOCK_COST      = 2;      // what we pay the supplier per apple
+const SELL_PRICE        = 3;      // what a customer pays us per apple
+const CAPACITY          = 8;      // how many apples fit on the shelf
+const CUSTOMER_EVERY_MS = 15000;  // how often someone wanders in
+
+// Placeholder pacing. A full shelf empties in two minutes, which is good for
+// testing and almost certainly too fast to live with. Tune it with the user.
 
 const SAVE_KEY     = 'grocery.save';
 const SAVE_VERSION = 1;
@@ -275,14 +285,59 @@ function repair(state) {
   };
 }
 
+// ---------------------------------------------------------------- economy
+
+// The whole game, as one pure function: given a store and how much time has
+// passed, what happened? No clock, no randomness, no page -- everything comes
+// in through the arguments. That is what lets the same code handle both the
+// hours you were away and the seconds you are watching, and it is why this can
+// be tested without a browser.
+function simulate(store, elapsedMs) {
+  const arrivals = Math.floor(elapsedMs / CUSTOMER_EVERY_MS);
+
+  // Nobody buys from an empty shelf. Note what this quietly does: however long
+  // you stay away, earnings are bounded by the stock you left out. That is the
+  // cap on offline earnings -- the shelf itself, not a rule that cuts you off.
+  const sold = Math.min(arrivals, store.stock);
+
+  return {
+    sold: sold,
+    store: {
+      money: store.money + sold * SELL_PRICE,
+      stock: store.stock - sold,
+      // Only time actually consumed by arrivals is spent; the remainder rolls
+      // forward. Without this, opening the game every few seconds would keep
+      // throwing away the leftover and nothing would ever sell.
+      lastPlayed: store.lastPlayed + arrivals * CUSTOMER_EVERY_MS,
+    },
+  };
+}
+
+// Brings the store up to the present moment. Returns how many apples sold.
+function advance() {
+  const now = Date.now();
+
+  // The clock moved backwards -- a timezone change, or a phone with the wrong
+  // date. Don't rewind, don't accuse anyone of anything, just carry on.
+  if (now < state.lastPlayed) {
+    state.lastPlayed = now;
+    save();
+    return 0;
+  }
+
+  const result = simulate(state, now - state.lastPlayed);
+  const moved = result.store.lastPlayed !== state.lastPlayed;
+
+  state = result.store;
+  if (moved) save();
+
+  return result.sold;
+}
+
 // ---------------------------------------------------------------- actions
 
 function canRestock() {
   return state.money >= RESTOCK_COST && state.stock < CAPACITY;
-}
-
-function canSell() {
-  return state.stock > 0;
 }
 
 function restock() {
@@ -290,13 +345,6 @@ function restock() {
   state.money -= RESTOCK_COST;
   state.stock += 1;
   commit('Stocked an apple.');
-}
-
-function sell() {
-  if (!canSell()) return;
-  state.stock -= 1;
-  state.money += SELL_PRICE;
-  commit('Sold an apple.');
 }
 
 function startOver() {
@@ -320,22 +368,43 @@ const el = {
   stock:   document.getElementById('stock'),
   note:    document.getElementById('note'),
   warning: document.getElementById('warning'),
+  status:  document.getElementById('status'),
   restock: document.getElementById('restock'),
-  sell:    document.getElementById('sell'),
   reset:   document.getElementById('reset'),
 };
 
-function render(note = '') {
+function statusLine() {
+  if (state.stock === 0) return 'The shelf is empty.';
+
+  const since = Math.max(0, Date.now() - state.lastPlayed);
+  const seconds = Math.ceil((CUSTOMER_EVERY_MS - since) / 1000);
+  return 'Next customer in ' + Math.max(0, seconds) + 's';
+}
+
+// What to say on opening the game. Never a scolding: an empty shelf is a thing
+// that happened, not a mistake that was made.
+function welcomeBack(sold, awayMs) {
+  if (sold > 0) {
+    return 'While you were away, ' + sold + (sold === 1 ? ' apple' : ' apples')
+         + ' sold. +$' + sold * SELL_PRICE;
+  }
+  if (awayMs > 5 * 60 * 1000 && state.stock === 0) {
+    return 'The shelf was empty while you were away.';
+  }
+  return '';
+}
+
+// Passing no note leaves the existing one alone, so a "while you were away"
+// message survives the once-a-second re-render instead of blinking out.
+function render(note) {
   el.money.textContent = '$' + state.money;
   el.stock.textContent = state.stock + ' / ' + CAPACITY;
+  el.status.textContent = statusLine();
 
   el.restock.textContent = 'Restock  ·  $' + RESTOCK_COST;
-  el.sell.textContent    = 'Sell  ·  $' + SELL_PRICE;
-
   el.restock.disabled = !canRestock();
-  el.sell.disabled    = !canSell();
 
-  el.note.textContent = note;
+  if (typeof note === 'string') el.note.textContent = note;
 
   el.warning.hidden = canSave;
   el.warning.textContent = canSave
@@ -346,11 +415,24 @@ function render(note = '') {
 // ---------------------------------------------------------------- start
 
 el.restock.addEventListener('click', restock);
-el.sell.addEventListener('click', sell);
 el.reset.addEventListener('click', startOver);
 
 state = load() || newStore();
-render();
+
+// Catch up on everything that happened while the game was closed, before the
+// first paint -- so the store is already up to date when it appears.
+const awayMs = Math.max(0, Date.now() - state.lastPlayed);
+const soldWhileAway = advance();
+render(welcomeBack(soldWhileAway, awayMs));
+
+// While the game is open, the same catching-up runs once a second. Nothing is
+// simulated in the background; this is only here so the shelf visibly moves
+// while you watch it.
+setInterval(() => {
+  const sold = advance();
+  render(sold > 0 ? (sold === 1 ? 'Sold an apple.' : 'Sold ' + sold + ' apples.') : undefined);
+}, 1000);
+
 checkForUpdate();
 </script>
 
