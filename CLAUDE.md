@@ -224,6 +224,19 @@ Not yet — but decisions now shouldn't box us in:
 - Keep the app fully playable offline against `localStorage`, syncing when it
   can. Cozy games shouldn't show a connection error on the subway.
 
+## Deploying
+
+Served free from GitHub Pages off the working branch; the repo is public so that
+this costs nothing. Every push is live within a minute or so.
+
+**Bump `VERSION` in `index.html` on every deploy.** The game checks that string
+against the server on launch and reloads itself at `?v=<new>` when it has moved.
+This exists because a page saved to a phone's home screen will happily serve a
+cached copy of itself for days, with no reload button to fix it -- the user hit
+exactly this. Forget the bump and they silently test an old build, which is
+worse than no auto-update at all, because they will believe the version they
+see in front of them.
+
 ## Working agreement
 
 - Build in slices the user can actually tap on a phone, not layers. A visibly

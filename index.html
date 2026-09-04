@@ -149,6 +149,38 @@
 // Still no database and no offline earnings -- the store does not run while
 // closed, it is only remembered.
 
+// ------------------------------------------------------------ up to date
+
+// A page saved to the home screen can sit on an old copy of itself for days,
+// with no reload button to fix it. So on each launch we quietly ask the server
+// what the current version is, and if it has moved, reload at a slightly
+// different address -- the reliable way past a cached copy.
+//
+// Bump VERSION on every deploy.
+const VERSION = '3';
+
+async function checkForUpdate() {
+  // If we already reloaded for this version, don't do it again: that would be
+  // an endless refresh loop if anything here misbehaves.
+  const alreadyTried = new URLSearchParams(location.search).get('v');
+
+  try {
+    const res = await fetch(location.pathname + '?check=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) return;
+
+    const found = (await res.text()).match(/const VERSION = '([^']*)'/);
+    if (!found) return;
+
+    const latest = found[1];
+    if (latest !== VERSION && latest !== alreadyTried) {
+      location.replace(location.pathname + '?v=' + latest);
+    }
+  } catch (err) {
+    // Offline, or the check failed. Play the copy we have; it is not important
+    // enough to interrupt anyone over.
+  }
+}
+
 // ---------------------------------------------------------------- config
 
 const RESTOCK_COST = 2;   // what we pay the supplier per apple
@@ -319,6 +351,7 @@ el.reset.addEventListener('click', startOver);
 
 state = load() || newStore();
 render();
+checkForUpdate();
 </script>
 
 </body>
