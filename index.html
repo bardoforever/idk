@@ -11,6 +11,7 @@
     --paper: #f5f0e8;
     --line: #d8cfc2;
     --good: #3f6b46;
+    --quiet: #8a7f70;
   }
 
   * { box-sizing: border-box; }
@@ -42,7 +43,7 @@
     font-size: 14px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #8a7f70;
+    color: var(--quiet);
     margin-bottom: 4px;
   }
 
@@ -91,9 +92,38 @@
     color: var(--good);
     padding-bottom: 4px;
   }
+
+  /* A testing tool, not part of the game. Small and out of the way. */
+  .reset {
+    align-self: flex-end;
+    min-height: 0;
+    width: auto;
+    border: none;
+    background: none;
+    margin: 8px 16px 0 0;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--quiet);
+    text-decoration: underline;
+  }
+
+  .reset:active { background: none; }
+
+  .warning {
+    margin: 0;
+    padding: 10px 24px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--quiet);
+  }
 </style>
 </head>
 <body>
+
+<button class="reset" id="reset">Start over</button>
+
+<p class="warning" id="warning" hidden></p>
 
 <main class="store">
   <div>
@@ -115,25 +145,105 @@
 </div>
 
 <script>
-// Smallest playable slice: one shelf, in memory only. Nothing is saved —
-// refreshing the page starts the store over. That's intentional for now.
+// One shelf, one product. The store now saves to this device.
+// Still no database and no offline earnings -- the store does not run while
+// closed, it is only remembered.
+
+// ---------------------------------------------------------------- config
 
 const RESTOCK_COST = 2;   // what we pay the supplier per apple
 const SELL_PRICE   = 3;   // what a customer pays us per apple
 const CAPACITY     = 8;   // how many apples fit on the shelf
 
-const state = {
-  money: 20,
-  stock: 0,
-};
+const SAVE_KEY     = 'grocery.save';
+const SAVE_VERSION = 1;
 
-const el = {
-  money:   document.getElementById('money'),
-  stock:   document.getElementById('stock'),
-  note:    document.getElementById('note'),
-  restock: document.getElementById('restock'),
-  sell:    document.getElementById('sell'),
-};
+// ---------------------------------------------------------------- state
+
+// Everything about the store lives here. Plain data only: no functions, no DOM
+// references, nothing that would not survive being turned into text and back.
+function newStore() {
+  return {
+    money: 20,
+    stock: 0,
+    lastPlayed: Date.now(),  // groundwork for offline earnings; unused so far
+  };
+}
+
+let state = newStore();
+
+// Some browsers (private windows, storage turned off) throw on any storage
+// access. The game still has to work; it just forgets.
+let canSave = true;
+
+// ---------------------------------------------------------------- saving
+
+function save() {
+  if (!canSave) return;
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+      version: SAVE_VERSION,
+      state: state,
+    }));
+  } catch (err) {
+    canSave = false;
+    render();
+  }
+}
+
+function load() {
+  let raw;
+  try {
+    raw = localStorage.getItem(SAVE_KEY);
+  } catch (err) {
+    canSave = false;
+    return null;
+  }
+  if (!raw) return null;
+
+  let save;
+  try {
+    save = JSON.parse(raw);
+  } catch (err) {
+    return null;  // corrupted; start fresh rather than crash
+  }
+
+  return repair(migrate(save));
+}
+
+// Upgrades an old save one version at a time. When the shape of the store
+// changes, bump SAVE_VERSION and add a step here -- so a store someone has been
+// growing for weeks survives the change.
+function migrate(save) {
+  if (!save || typeof save !== 'object') return null;
+
+  let version = save.version;
+  let state = save.state;
+
+  // Example of the shape a future step takes:
+  // if (version === 1) { state.decor = []; version = 2; }
+
+  if (version !== SAVE_VERSION) return null;  // unknown or newer than us
+  return state;
+}
+
+// A saved store is just text on a device, so treat it as untrusted: anything
+// missing or nonsensical falls back to a sane value instead of breaking.
+function repair(state) {
+  if (!state || typeof state !== 'object') return null;
+
+  const fresh = newStore();
+  const number = (value, fallback) =>
+    typeof value === 'number' && isFinite(value) ? value : fallback;
+
+  return {
+    money: Math.max(0, Math.floor(number(state.money, fresh.money))),
+    stock: Math.min(CAPACITY, Math.max(0, Math.floor(number(state.stock, 0)))),
+    lastPlayed: number(state.lastPlayed, Date.now()),
+  };
+}
+
+// ---------------------------------------------------------------- actions
 
 function canRestock() {
   return state.money >= RESTOCK_COST && state.stock < CAPACITY;
@@ -147,15 +257,41 @@ function restock() {
   if (!canRestock()) return;
   state.money -= RESTOCK_COST;
   state.stock += 1;
-  render('Stocked an apple.');
+  commit('Stocked an apple.');
 }
 
 function sell() {
   if (!canSell()) return;
   state.stock -= 1;
   state.money += SELL_PRICE;
-  render('Sold an apple.');
+  commit('Sold an apple.');
 }
+
+function startOver() {
+  if (!confirm('Start the store over from scratch?')) return;
+  state = newStore();
+  commit('Fresh start.');
+}
+
+// Every change to the store goes through here, so saving can never be
+// forgotten at a call site.
+function commit(note) {
+  state.lastPlayed = Date.now();
+  save();
+  render(note);
+}
+
+// ---------------------------------------------------------------- rendering
+
+const el = {
+  money:   document.getElementById('money'),
+  stock:   document.getElementById('stock'),
+  note:    document.getElementById('note'),
+  warning: document.getElementById('warning'),
+  restock: document.getElementById('restock'),
+  sell:    document.getElementById('sell'),
+  reset:   document.getElementById('reset'),
+};
 
 function render(note = '') {
   el.money.textContent = '$' + state.money;
@@ -168,11 +304,20 @@ function render(note = '') {
   el.sell.disabled    = !canSell();
 
   el.note.textContent = note;
+
+  el.warning.hidden = canSave;
+  el.warning.textContent = canSave
+    ? ''
+    : "This browser won't let the game save, so the store starts over each visit.";
 }
+
+// ---------------------------------------------------------------- start
 
 el.restock.addEventListener('click', restock);
 el.sell.addEventListener('click', sell);
+el.reset.addEventListener('click', startOver);
 
+state = load() || newStore();
 render();
 </script>
 
