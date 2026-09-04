@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Grocery Game</title>
+<style>
+  /* Deliberately minimal. Just enough to be legible and thumb-reachable. */
+  :root {
+    --ink: #2e2a26;
+    --paper: #f5f0e8;
+    --line: #d8cfc2;
+    --good: #3f6b46;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+    color: var(--ink);
+    font: 17px/1.4 system-ui, sans-serif;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+             env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* Top: the store. Bottom: the controls, within thumb reach. */
+  .store {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .label {
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8a7f70;
+    margin-bottom: 4px;
+  }
+
+  .money { font-size: 44px; font-weight: 600; }
+
+  .shelf {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+    background: #fffdf9;
+  }
+
+  .stock { font-size: 32px; font-weight: 600; }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 24px 24px;
+  }
+
+  button {
+    /* Tall enough to hit with a thumb without looking. */
+    min-height: 60px;
+    width: 100%;
+    border: 1px solid var(--ink);
+    border-radius: 12px;
+    background: #fffdf9;
+    color: var(--ink);
+    font: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  button:active { background: #ece5da; }
+
+  /* No fail state: an unaffordable button goes quiet, it never scolds. */
+  button:disabled { opacity: 0.4; cursor: default; }
+
+  .note {
+    min-height: 22px;
+    text-align: center;
+    font-size: 15px;
+    color: var(--good);
+    padding-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<main class="store">
+  <div>
+    <div class="label">Money</div>
+    <div class="money" id="money"></div>
+  </div>
+
+  <div class="shelf">
+    <div class="label">Apples</div>
+    <div class="stock" id="stock"></div>
+  </div>
+</main>
+
+<div class="note" id="note"></div>
+
+<div class="controls">
+  <button id="restock"></button>
+  <button id="sell"></button>
+</div>
+
+<script>
+// Smallest playable slice: one shelf, in memory only. Nothing is saved —
+// refreshing the page starts the store over. That's intentional for now.
+
+const RESTOCK_COST = 2;   // what we pay the supplier per apple
+const SELL_PRICE   = 3;   // what a customer pays us per apple
+const CAPACITY     = 8;   // how many apples fit on the shelf
+
+const state = {
+  money: 20,
+  stock: 0,
+};
+
+const el = {
+  money:   document.getElementById('money'),
+  stock:   document.getElementById('stock'),
+  note:    document.getElementById('note'),
+  restock: document.getElementById('restock'),
+  sell:    document.getElementById('sell'),
+};
+
+function canRestock() {
+  return state.money >= RESTOCK_COST && state.stock < CAPACITY;
+}
+
+function canSell() {
+  return state.stock > 0;
+}
+
+function restock() {
+  if (!canRestock()) return;
+  state.money -= RESTOCK_COST;
+  state.stock += 1;
+  render('Stocked an apple.');
+}
+
+function sell() {
+  if (!canSell()) return;
+  state.stock -= 1;
+  state.money += SELL_PRICE;
+  render('Sold an apple.');
+}
+
+function render(note = '') {
+  el.money.textContent = '$' + state.money;
+  el.stock.textContent = state.stock + ' / ' + CAPACITY;
+
+  el.restock.textContent = 'Restock  ·  $' + RESTOCK_COST;
+  el.sell.textContent    = 'Sell  ·  $' + SELL_PRICE;
+
+  el.restock.disabled = !canRestock();
+  el.sell.disabled    = !canSell();
+
+  el.note.textContent = note;
+}
+
+el.restock.addEventListener('click', restock);
+el.sell.addEventListener('click', sell);
+
+render();
+</script>
+
+</body>
+</html>
