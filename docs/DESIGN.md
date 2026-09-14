@@ -13,7 +13,7 @@ Open: final theme pick.
 | Question | Answer | Consequence |
 |---|---|---|
 | Pressure | **Cozy** | Collector caps at 25%, clock pauses when you're both away, shifts can't be failed |
-| Fiction | Creative shop (paint / cookies / art+records) | Content pack, engine is theme-agnostic |
+| Fiction | **Art supplies + records** | Sections split her half / your half; Eye and Ear become literal |
 | Play pattern | **Same time, most days** | Heavy investment in the live shared board |
 | Roles | **Distinct** | The Eye / The Ear asymmetry |
 | Length | **Endless** | Infinite mastery tail + optional cozy prestige |
@@ -78,7 +78,7 @@ shift ends at 0 stamina → payout, contribution logged, note to partner.
 | Wrong sort | **−4 stamina**, combo drops one step. No cash fee. |
 | Combo | +0.25× per 5 correct, cap **3.0×** at streak 40 |
 | Section shelf goal | 10 into one section in a shift → **$40** |
-| Expected shift (start) | ~$250–350 gross, ~3 min |
+| Expected shift (start) | **$333 measured** at 90% accuracy, 3.3 min |
 | Expected shift (endgame) | ~$1,800, ~8 min |
 
 **Target: bills consume 35–45% of expected income at every stage.** Two people
@@ -88,6 +88,25 @@ the upgrade budget.
 Cozy note: the wrong-sort cash fee from v1 is gone. A mistake costs you time and
 one step of combo — never money. Losing money for misremembering where the
 cadmium yellow goes is the opposite of cozy.
+
+**Measured, not estimated.** `npm run sim` plays the real engine headlessly.
+The v2 draft guessed ~45 correct placements per shift; break items actually
+stretch a shift to ~68, which put payouts at $503. Base values were cut from
+$3/$12 to $2/$8 and the section bonus from $40 to $25 to land inside the band
+and keep the bill schedule meaningful. Skill curve as built:
+
+| Accuracy | Cash/shift | Length |
+|---|---|---|
+| 65% | $64 | 1.9 min |
+| 80% | $165 | 2.6 min |
+| 90% | $343 | 3.3 min |
+| 98% | $617 | 4.4 min |
+
+**Watch in playtest:** a mistake currently costs stamina *and* a combo step
+*and* delays the section bonus. That is three compounding penalties, which is
+the one place the build may read harsher than "cozy". Streak Forgiveness
+(slice 4) is the intended release valve; if it still bites, cut `mistakeCost`
+first.
 
 ---
 
@@ -173,7 +192,9 @@ One shared bank, one shared tree. There are no personal upgrades.
 
 ## 8. Progression (endless)
 
-5 starting sections. Shelving **250** correct items into a section **masters**
+5 starting sections — **Pigments · Brushes & Blades · Paper & Canvas · Vinyl &
+Tape · Cables & Gear** — plus an always-present **Back Room** for break items,
+filling the 2×3 shelf grid. Shelving **250** correct items into a section **masters**
 it, which unlocks the next and visibly upgrades that corner of the shop —
 crates become shelves become lit displays.
 
@@ -260,7 +281,7 @@ touch rows for a store you belong to.
 ## 11. Build order
 
 1. **Playable solo sorting loop** — board, tray, stamina, combo, payout. Local
-   only, no backend.
+   only, no backend. ✅ **built** — see the repo README to run it.
 2. **Economy + bills** — ledger, bill cycle, perk picks, Collector.
 3. **Sync / co-op** — Supabase, outbox, join code, live board, roles.
 4. **Skill tree** — upgrades, mastery, section unlocks.
