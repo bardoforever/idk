@@ -29,8 +29,29 @@ godot --headless --export-release "Web" ../build/web/index.html
 ```
 
 Web is the delivery route for iPhone, since a native iOS build needs a Mac
-with Xcode. The export is single-threaded on purpose (`thread_support=false`)
-so it runs on any host without cross-origin isolation headers.
+with Xcode. The export must stay single-threaded (`thread_support=false`): a
+threaded build demands `SharedArrayBuffer` and cross-origin isolation headers
+that most hosts, including the artifact host, do not send.
+
+To repackage that export as one self-contained page:
+
+```bash
+python3 ../tools/build_web_artifact.py ../build/web ../build/play
+```
+
+The engine is a single 37MB `.wasm` and the artifact host caps any one binary
+file at 15MB, so the script splits it into pieces, publishes them as `.wasm`
+files, and glues them back together with a `fetch` interceptor before the
+loader sees it. The `.pck` rides inside the page as base64, since only
+standard web media types are served.
+
+It reads the engine config and the threads flag **out of Godot's own generated
+`index.html`** rather than having them copied by hand. That is not fussiness:
+hand-copying them once shipped a build that called
+`Engine.getMissingFeatures(config)` instead of
+`Engine.getMissingFeatures({threads: false})` — and since that argument
+defaults to `threads: true`, the page demanded cross-origin isolation from a
+build that never needed it, and refused to start on a phone.
 
 ## Layout
 
