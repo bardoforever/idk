@@ -1,288 +1,218 @@
-# THE CORNER SHOP — Design Doc v2
+# THE CORNER SHOP — Design Doc v3
 
-A cozy co-op sorting game for exactly two people. Portrait, touch-first,
-2–10 minute sessions, works offline, server-authoritative money.
+A cozy two-player co-op **shop-sorting game you walk around**.
+Top-down/isometric, portrait, one thumb, Godot 4.6.
 
-Status: design approved in part (v2 folds in answers to the five questions).
-Open: final theme pick.
+> **v3 is a correction, not an iteration.** v1 and v2 described a
+> tap-a-tile board game. That was a misread of the references. The real
+> genre — Sort Them Ducks, Supermarket Chaos — is *spatial*: you are a person
+> in a shop, you physically go and get things and physically put them away.
+> The v1/v2 skill tree was already telling me this (carry capacity, move
+> speed, auto-pickup are meaningless without a floor to walk on) and I built
+> the wrong thing anyway. The Expo app is being replaced.
 
 ---
 
-## 1. Decisions locked
+## 1. What the references actually do
 
-| Question | Answer | Consequence |
+| Game | What it is | What we take |
 |---|---|---|
-| Pressure | **Cozy** | Collector caps at 25%, clock pauses when you're both away, shifts can't be failed |
-| Fiction | **Art supplies + records** | Sections split her half / your half; Eye and Ear become literal |
-| Play pattern | **Same time, most days** | Heavy investment in the live shared board |
-| Roles | **Distinct** | The Eye / The Ear asymmetry |
-| Length | **Endless** | Infinite mastery tail + optional cozy prestige |
+| **Sort Them Ducks** | First-person cozy shop. Walk, pick up an armful of ducks, find the shelf, put them away. 4,000+ ducks. No timer, no fail state. Upgrades: carry more, move faster, highlight matches, reveal the shelf, auto-collect nearby. | The entire core verb. The upgrade list. The no-fail cosiness. |
+| **Supermarket Chaos** | Same shape, supermarket: 4,668 products, 16 departments. Read the shelf label, match the product. Shelves visibly fill as you work. | Department structure, and *visible* progress as the win condition. |
+| **Bills Must Be Paid** | Active incremental. Stamina-limited runs; bills with deadlines; ignore one and a collector skims your earnings; paying unlocks perks; skill tree. | The whole pressure layer, exactly as v2 had it. |
+
+The first two are the loop. The third is the meta. Neither of the first two
+is a menu you tap — that was the error.
 
 ---
 
-## 2. Tech stack
+## 2. Core loop
 
-**Expo React Native (TypeScript) + Supabase, single repo.**
+**You are in the shop.** Camera is top-down at an angle, following you.
+The shop is bigger than the screen; the camera scrolls with you.
 
-Expo puts the game on both phones via a dev build, with EAS Update pushing
-changes over the air — no app store, no review, which matters when the install
-base is two. The board is taps and short animations, not physics, so Reanimated
-+ Gesture Handler suffices and we keep one codebase instead of a Unity project
-with two native shells. Supabase over Firebase/Convex specifically because money
-must be server-authoritative: Postgres gives real multi-row transactions, so
-"pay bill, apply late fee, pick perk, debit balance" is one atomic function that
-cannot half-apply or drift between two saves, and an append-only ledger with a
-unique idempotency key makes offline replay safe by construction. Firebase's
-offline queue is better out of the box but its rules language can't express
-transactional economy math; Convex is lovely but its offline story is thinner.
-Supabase Realtime covers both needs — Postgres change streams for "partner
-bought an upgrade", broadcast + presence channels for the live board. Locally,
-expo-sqlite holds the catalog, a store snapshot, and a **mutation outbox**.
-Caveat: free-tier Supabase pauses after ~a week idle; a cron ping or the $25
-tier fixes it.
+1. **Run** — one thumb. Touch anywhere in the lower half, drag: a floating
+   joystick appears under your thumb and you run that way. Nothing else is
+   needed to play.
+2. **Collect** — run through a pile on the floor and items magnetise into a
+   stack you carry, visibly, up to your carry capacity. This is auto-pickup;
+   the upgrade widens the magnet radius.
+3. **Read** — your stack is listed in the HUD with names. *This* is where
+   identification happens: "Acetate Disc — which aisle?"
+4. **Deliver** — run into a shelf's drop zone. Every item in your arms that
+   belongs there flies onto the shelf, one at a time, each one paying out.
+   Items that don't belong stay in your arms.
+5. The shelf **visibly fills**. Repeat until the shift meter runs out.
 
-Audio (needed for The Ear): `expo-av`, short `.m4a` one-shots bundled in the
-content pack, preloaded per shift.
+**There is no wrong-shelf penalty, and no mistake button.** A shelf simply
+doesn't take what isn't its. The cost of not knowing where something goes is
+that you walked across the shop for nothing — and shift time is the scarce
+resource. This is both cosier and truer to the references than v2's fee.
 
----
+That deletes v2's "streak forgiveness" upgrade. Replaced below.
 
-## 3. Core loop
+### Combo, respun for a game with a floor
 
-Open → **Start Shift** → items drop into the tray → tap an item to pick it up →
-tap the right section to shelve it → cash + combo tick up → stamina drains →
-shift ends at 0 stamina → payout, contribution logged, note to partner.
+Multiplier climbs with each item delivered and **decays if you go more than
+~6 seconds without delivering one**. Standing still or walking empty-handed
+bleeds it.
 
-- **Layout.** Top 60%: 5 section shelves in a 2-3 grid, large targets. Bottom
-  40%: the messy tray, your hands, and the HUD (stamina / combo / cash).
-  Everything you tap *first* lives in the bottom third; shelves are a thumb
-  stretch. One-handed throughout.
-- **Input.** Tap-to-pick, tap-to-place. Drag is supported, never required. With
-  Carry Capacity > 1 you hold a stack and one tap dumps all matching items.
-- **Items.** Name + icon + exactly one correct section. ~40 per section, ~200 at
-  v1. Ambiguity is deliberate at higher tiers — that's the skill.
-- **Stamina.** Base pool **120**; each placement costs **2**, a mistake costs
-  **4** extra → ~55 placements, ~3 min at start. Fully upgraded: 220 pool,
-  ~8–10 min.
-- **Break items** (~1 in 12) restore **+12 / +20 / +8** stamina, but only when
-  shelved correctly into Break Room. Stamina is downstream of skill, not luck.
-- **Shifts cannot be failed.** Stamina zero ends the shift; you always bank what
-  you earned.
+So the skill is *routing*: fill your arms with a mixed load, then chain
+deliveries across several aisles without a gap. Carry capacity, move speed
+and knowing the shop all feed the same number. That is the game.
+
+### Shift meter
+
+A shift is a timed opening, not an action budget. ~3 minutes at the start,
+~8 fully upgraded. Coffee and snacks lie around the shop: run over one and
+it's consumed on the spot for extra seconds. No fail state — when the shop
+closes you bank everything.
 
 ---
 
-## 4. Economy
+## 3. The shop
 
-| Thing | Value |
-|---|---|
-| Correct sort | **$3** (rare/premium items **$12**) |
-| Wrong sort | **−4 stamina**, combo drops one step. No cash fee. |
-| Combo | +0.25× per 5 correct, cap **3.0×** at streak 40 |
-| Section shelf goal | 10 into one section in a shift → **$40** |
-| Expected shift (start) | **$333 measured** at 90% accuracy, 3.3 min |
-| Expected shift (endgame) | ~$1,800, ~8 min |
+Portrait, so the floor plan runs vertically:
 
-**Target: bills consume 35–45% of expected income at every stage.** Two people
-at 2 shifts/day each ≈ $7k/week early; weekly bill load ≈ $2.7k. The surplus is
-the upgrade budget.
+```
+        ┌─────────────────────────┐
+        │   BACK ROOM  (coffee)   │   <- unlocks later
+        ├─────────────────────────┤
+        │  ▓▓▓▓      ░░░░   ▓▓▓▓  │
+        │  PIGMENTS  pile   PAPER │
+        │                         │
+        │  ▓▓▓▓      ░░░░   ▓▓▓▓  │   <- aisles, camera scrolls
+        │  BRUSHES   pile   VINYL │
+        │                         │
+        │      ▓▓▓▓    ░░░░       │
+        │       GEAR   pile       │
+        ├─────────────────────────┤
+        │  COUNTER / TILL  ▣      │   <- you start here, shift ends here
+        └─────────────────────────┘
+```
 
-Cozy note: the wrong-sort cash fee from v1 is gone. A mistake costs you time and
-one step of combo — never money. Losing money for misremembering where the
-cadmium yellow goes is the opposite of cozy.
+Five sections open, roped-off areas beyond them. **Unlocking a section
+physically opens the shop**: the rope comes down, a new aisle is yours, new
+stock starts appearing in the piles. Progression is something you walk into.
 
-**Measured, not estimated.** `npm run sim` plays the real engine headlessly.
-The v2 draft guessed ~45 correct placements per shift; break items actually
-stretch a shift to ~68, which put payouts at $503. Base values were cut from
-$3/$12 to $2/$8 and the section bonus from $40 to $25 to land inside the band
-and keep the bill schedule meaningful. Skill curve as built:
+Items are simple shapes carrying an icon, readable from above; the name lives
+in the HUD when it's in your arms and on a floating label when you're near it.
+**Open question — the first thing to playtest.** Getting "which of these 200
+things am I holding" legible at a glance on a phone is the hardest single
+problem in this design.
 
-| Accuracy | Cash/shift | Length |
+---
+
+## 4. Upgrades — now they mean something
+
+| Branch | Node | What it does on the floor |
 |---|---|---|
-| 65% | $64 | 1.9 min |
-| 80% | $165 | 2.6 min |
-| 90% | $343 | 3.3 min |
-| 98% | $617 | 4.4 min |
+| **HANDS** | Carry Capacity | Taller visible stack. Fewer trips. |
+| | Auto-Pickup | Wider magnet radius; items leap to you. |
+| | Fast Hands | Items unload onto the shelf quicker. |
+| **FEET** | Move Speed | You cover the shop faster. |
+| | Sprint | Burst of speed; costs shift time. |
+| | Nimble | You stop snagging on shelf corners. |
+| **EYES** | Section Highlight | The right aisle glows for what you carry. |
+| | Shelf Labels | Bigger, readable labels at distance. |
+| | Luck | More premium stock in the piles. |
+| **HEART** | Shift Length | Longer opening hours. |
+| | Barista | Coffee gives more back. |
+| | Second Wind | One free top-up per shift. |
+| | Shared Nerve | Co-op: partner's delivery feeds your combo. |
 
-**Watch in playtest:** a mistake currently costs stamina *and* a combo step
-*and* delays the section bonus. That is three compounding penalties, which is
-the one place the build may read harsher than "cozy". Streak Forgiveness
-(slice 4) is the intended release valve; if it still bites, cut `mistakeCost`
-first.
-
----
-
-## 5. Bills
-
-Issued per store, not per player.
-
-| Bill | Cycle | Base | Miss effect |
-|---|---|---|---|
-| Restock | 48h | $220 | premium spawn rate halves |
-| Power | 72h | $300 | highlighting + auto-pickup off |
-| Rent | 7d | $1,200 | — |
-| Internet | 7d (tier 2) | $180 | live co-op disabled |
-
-**Bills scale off store tier, not the calendar:**
-`amount = base × (1 + 0.15 × tier)`, tier rising with sections unlocked and
-upgrades bought. Going away for two weeks must never come back as a wall of
-compound rent.
-
-**The Collector (cozy tuning).** Each overdue bill skims **10%** of earnings,
-stacking, **capped at 25%**. Paying clears that bill's skim plus a **10%** late
-fee. Skim applies server-side at payout.
-
-**Closed for the Weekend.** If neither of you has played in **36h**, all bill
-clocks pause and a hand-lettered CLOSED sign goes up in the window. No penalty,
-no catch-up burst on return — the shop just waits for you.
-
-**Paying a bill → pick 1 of 3 perks**, each lasting 3 shifts: +20% cash ·
-+30 stamina · free section highlight · combo gains doubled · mistakes free ·
-double break-item value · next bill −30%.
+FEET is new and only exists because there's a floor. Streak Forgiveness is
+gone — there are no mistakes to forgive.
 
 ---
 
-## 6. Roles — The Eye and The Ear
+## 5. Bills, economy, co-op sync
 
-Chosen at pairing, swappable once a week. Both players can sort anything; the
-role changes *what comes easily* and what you bring to a shared shift.
+**Unchanged from v2** — that layer was never the problem:
 
-### THE EYE
-Identifies by sight. Native: **Section Highlight is free and permanent** — the
-correct shelf pulses faintly on pickup.
-- **Colour Sense** — items carry a hue; sorting a run of the same family chains
-  a side-combo worth +$2 each.
-- **Big Hands** — Carry Capacity starts at 2, caps at 6 (Ear caps at 4).
-- **Curation** — mastery and cosmetic progress accrue 25% faster; the Eye picks
-  the shop's cosmetic direction as sections are mastered.
+- Cozy tuning: collector skims 10% per overdue bill, capped at 25%; 10% late
+  fee; **Closed for the Weekend** pauses every clock when neither of you has
+  played in 36h.
+- Bills scale with shop tier, never with the calendar.
+- Paying a bill → pick 1 of 3 perks, 3 shifts each.
+- One shared bank, one shared tree, one shared bill ledger, max two accounts,
+  join by 6-character code.
+- **Clients never write state, they submit events.** Append-only ledger,
+  idempotent on a client-generated UUID, offline outbox, spends as
+  compare-and-set. Nothing here changes.
 
-### THE EAR
-Identifies by sound. Native: **audio items** — some items play a 1.5s one-shot
-instead of showing a name, and are sorted by what you hear.
-- **Tempo** — combo builds every 4 correct instead of 5, and decays a step
-  slower.
-- **Soundcheck** — each shift runs at a BPM; placements landing on the beat pay
-  **+50%**. Optional, visible as a pulsing ring, ignorable if you're not feeling
-  it.
-- **The Mix** — can spend a charge to hand the Eye a 10-second 2× multiplier.
+**Co-op gets better, not harder.** You're both in the shop. You see her
+character running the Vinyl aisle with an armful. That replaces every
+abstraction v2 invented — no ghost hands, no "who's sorting what" indicator,
+no claimed-item badges. You just look.
 
-### Together
-- **Call & Response** — the Ear taps an item to *tag* it; if the Eye shelves a
-  tagged item correctly, both get **+0.5×** for 5s.
-- **Mixed media** items (a paint-splattered record sleeve, a sampler pad) can
-  only be resolved by one of each: one identifies, the other shelves.
-- Solo play is never blocked — a solo Eye gets audio items rendered with their
-  name visible, a solo Ear gets colour runs auto-detected. You lose the bonus,
-  not the ability.
+Two new sync classes on top of v2's model:
 
----
+- **Positions** — ~20 Hz, ephemeral, never persisted, dropped frames are fine.
+- **Pile authority** — whoever starts the shift hosts item spawns and pickup
+  claims, so you can't both grab the same jar. Authority moves if they drop.
 
-## 7. Skill tree (shared)
+Money stays server-authoritative exactly as before.
 
-Ranks cost **$150 → $400 → $1k → $2.5k → $6k**, then continue infinitely at
-×1.9 per rank with +2% effect each — the incremental tail.
-
-- **HANDS** — Carry Capacity · Auto-Pickup · Place Speed · Bulk Dump
-- **EYES** — Section Highlight · Label Zoom · Luck · Recall (shows where you
-  last shelved this item)
-- **HEART** — Stamina Pool · Streak Forgiveness · Second Wind · Barista ·
-  Shared Nerve (co-op: partner's correct sort refunds you 1 stamina)
-
-One shared bank, one shared tree. There are no personal upgrades.
+**Roles survive and get physical.** The Eye sees colour and gets free aisle
+highlighting; the Ear hears items and runs on tempo. Mixed-media items need a
+handoff — one carries, one shelves.
 
 ---
 
-## 8. Progression (endless)
+## 6. Tech
 
-5 starting sections — **Pigments · Brushes & Blades · Paper & Canvas · Vinyl &
-Tape · Cables & Gear** — plus an always-present **Back Room** for break items,
-filling the 2×3 shelf grid. Shelving **250** correct items into a section **masters**
-it, which unlocks the next and visibly upgrades that corner of the shop —
-crates become shelves become lit displays.
+**Godot 4.6, GDScript, exporting to Android and Web.**
 
-- **Mastery is infinite.** Each section levels 1 → ∞ on a slow curve, each level
-  a small permanent bonus. There is always a number moving.
-- **Seasons.** Roughly every two weeks, a themed stock drop adds items and a
-  limited section. Content, never a reset.
-- **Renovation** (optional cozy prestige). At tier 5+ you may choose to
-  renovate: keep every cosmetic, mastery level, and section unlock; reset cash
-  and upgrade ranks; gain a permanent multiplier and one new section. Never
-  forced, never loses anything you can see.
+Chosen over Three.js-in-Expo because this is now a real-time 3D game with a
+character controller, spatial audio, physics-ish pickup and a scrolling
+camera — that is a game engine's job, and fighting React Native for frame
+time to save a language is a bad trade. Godot is free, its scene system suits
+a shop built from repeated aisle prefabs, and it exports to both phones.
 
----
+**The costs, stated plainly:**
 
-## 9. Co-op sync model
+- **No over-the-air updates.** Every build has to be installed.
+- **Android** is easy: a signed APK, sideloaded.
+- **iPhone is genuinely awkward.** A native iOS build needs a Mac with Xcode.
+  Without one, the route is the **web export opened in Safari** — which works
+  and needs no install, but must be hosted somewhere (GitHub Pages, itch.io);
+  it will not fit the artifact host, whose binary cap is 15 MB against a
+  37 MB WebAssembly build.
+- Supabase has no Godot SDK; it's REST over `HTTPRequest` and Realtime over
+  `WebSocketPeer`. Both are plain and well-trodden, just hand-written.
 
-One **store**, two members, hard max. Pairing by 6-character join code, burned
-on use. One bank, one tree, one bill ledger, one history.
-
-**The rule that makes it safe: clients never write state, they submit events.**
-No client says "balance is now $4,320." It says "event `uuid-7`: shift payout,
-+$312." The server appends to a ledger and recomputes.
-
-- **Offline.** Every action lands in a local SQLite outbox with a
-  client-generated UUID. On reconnect the batch POSTs; the server dedupes on
-  that UUID (unique index), so replaying is a no-op. Earnings are additive
-  deltas — two people playing offline simultaneously simply both get paid.
-- **Spends** are the only conflict surface. Transactional compare-and-set
-  against live balance. Offline you may spend up to *(last-synced balance − 20%
-  reserve)*. If your partner beat you to it, the server rejects and the client
-  rolls back with "she bought Carry Capacity III while you were offline — here's
-  your $400 back." Never a silent overwrite.
-- **Live board.** Both online → one shared board over a Realtime channel. Items
-  carry a **soft claim** (`claimed_by`, 3s TTL) so you never both grab the same
-  jar; a claimed item shows your partner's colour and a ghost hand. Combo is a
-  **shared pool**; sorting correctly within 2s of each other triggers
-  **In Sync: +0.5× for 5s**.
-- **Async.** A contribution log records each shift (who, items, cash, best
-  combo). Each of you has one 140-character **note** pinned to the shop,
-  editable only by its author — last-write-wins per author, so notes cannot
-  conflict either.
+Verified working in this environment: Godot 4.6 headless, project import, and
+`--export-release Web` producing a running build. So builds can be produced
+here; only delivery to an iPhone needs a host.
 
 ---
 
-## 10. Data schema
+## 7. What survives from the Expo build
 
-Static content pack: `sections(key, name, tier, unlock_req)` ·
-`items(key, name, icon, audio, hue, section_key, base_value, rarity,
-stamina_restore, mixed_media)`.
+- **The item catalog.** 200 items across five sections plus 12 break items,
+  with the deliberate collisions (Vinyl Eraser, Acetate Sheet vs Acetate Disc,
+  Record Brush, Gaff Tape). Real content, ported to Godot resources.
+- **The bills, ledger and sync design**, whole.
+- **The palette** — warm paper and ink still suits the shop.
+- **The balance-simulator habit**: tune against a headless run, not a guess.
 
-Live tables:
-
-- `users(id, display_name, avatar)`
-- `stores(id, name, join_code, tier, balance_cents, cosmetics jsonb)`
-- `store_members(store_id, user_id, role['eye'|'ear'], joined_at)` — trigger
-  enforces **max 2**
-- `ledger(id, store_id, user_id, kind, amount_cents, ref_id,
-  client_event_id UNIQUE, server_seq, created_at)` — **append-only, the single
-  source of truth for money**; `stores.balance_cents` is a trigger-maintained
-  cache
-- `shifts(id, store_id, mode, started_at, ended_at, items_sorted, wrong,
-  best_combo, gross_cents, net_cents, client_event_id UNIQUE)`
-- `shift_participants(shift_id, user_id, correct, wrong, best_combo, cash_cents)`
-- `bills(id, store_id, type, amount_cents, issued_at, due_at, status, cycle_n,
-  paid_by, paid_at, late_fee_cents)`
-- `perks(id, store_id, bill_id, key, chosen_by, shifts_remaining)`
-- `upgrades(store_id, key, rank, purchased_by, purchased_at)` — PK
-  `(store_id, key)`
-- `section_progress(store_id, section_key, correct_total, mastery, unlocked_at)`
-- `notes(store_id, author_id, body, updated_at)` — PK `(store_id, author_id)`
-- `boards(id, store_id, seed, state jsonb, active)` — claims are broadcast-only,
-  never persisted
-
-Client SQLite: catalog cache, store snapshot,
-`outbox(client_event_id, kind, payload, attempts, status)`.
-
-Server RPCs — all `SECURITY DEFINER`, all idempotent on `client_event_id`, all
-balance-checked in-transaction: `submit_shift` · `pay_bill` · `choose_perk` ·
-`buy_upgrade` · `redeem_join_code` · `roll_bills` (cron). RLS: you can only
-touch rows for a store you belong to.
+Deleted: the React Native app, the tap-tap input model, and the economy
+constants, which were tuned for an action budget and must be retuned for a
+clock.
 
 ---
 
-## 11. Build order
+## 8. Slices, re-cut
 
-1. **Playable solo sorting loop** — board, tray, stamina, combo, payout. Local
-   only, no backend. ✅ **built** — see the repo README to run it.
-2. **Economy + bills** — ledger, bill cycle, perk picks, Collector.
-3. **Sync / co-op** — Supabase, outbox, join code, live board, roles.
-4. **Skill tree** — upgrades, mastery, section unlocks.
-5. **Polish** — cosmetics, audio, animation, Seasons.
+1. **Walk and sort.** One aisle, one shop, joystick, magnet pickup, carrying
+   stack, shelf delivery, shift clock. No economy. The question it answers:
+   does moving around this shop feel good on a phone?
+2. **The shop.** Five sections, piles, the full catalog, combo, coffee,
+   payouts, shelves filling.
+3. **Economy + bills.** The v2 layer, retuned to a clock.
+4. **Co-op.** Two characters, one shop, shared bank, roles.
+5. **Skill tree, unlockable aisles, polish.**
+
+Slice 1 is deliberately small and about *feel*. If running around the shop
+isn't fun, nothing above it matters.
