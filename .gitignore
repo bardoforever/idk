@@ -39,3 +39,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Seeded design canvas (2.5MB, regenerated from design/*.dc.html)
+design/the-corner-shop-screens.html
