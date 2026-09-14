@@ -1,0 +1,1962 @@
+{
+ "sections": [
+  {
+   "key": "pigments",
+   "name": "Pigments",
+   "short": "Pigments",
+   "icon": "🎨",
+   "color": "#C4553B",
+   "scoring": true
+  },
+  {
+   "key": "brushes",
+   "name": "Brushes & Blades",
+   "short": "Brushes",
+   "icon": "🖌️",
+   "color": "#9A6B3F",
+   "scoring": true
+  },
+  {
+   "key": "paper",
+   "name": "Paper & Canvas",
+   "short": "Paper",
+   "icon": "📄",
+   "color": "#5F7A8C",
+   "scoring": true
+  },
+  {
+   "key": "vinyl",
+   "name": "Vinyl & Tape",
+   "short": "Vinyl",
+   "icon": "💿",
+   "color": "#4A4458",
+   "scoring": true
+  },
+  {
+   "key": "gear",
+   "name": "Cables & Gear",
+   "short": "Gear",
+   "icon": "🎛️",
+   "color": "#3E6B5A",
+   "scoring": true
+  },
+  {
+   "key": "backroom",
+   "name": "Back Room",
+   "short": "Back Room",
+   "icon": "☕",
+   "color": "#A8742A",
+   "scoring": false
+  }
+ ],
+ "items": [
+  {
+   "key": "cadmium-red",
+   "name": "Cadmium Red",
+   "icon": "🔴",
+   "section": "pigments",
+   "hue": "warm",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "alizarin-crimson",
+   "name": "Alizarin Crimson",
+   "icon": "🟥",
+   "section": "pigments",
+   "hue": "warm",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "vermilion",
+   "name": "Vermilion",
+   "icon": "🟧",
+   "section": "pigments",
+   "hue": "warm",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cadmium-orange",
+   "name": "Cadmium Orange",
+   "icon": "🟠",
+   "section": "pigments",
+   "hue": "warm",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "naples-yellow",
+   "name": "Naples Yellow",
+   "icon": "🟡",
+   "section": "pigments",
+   "hue": "warm",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cadmium-yellow",
+   "name": "Cadmium Yellow",
+   "icon": "🟨",
+   "section": "pigments",
+   "hue": "warm",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "lemon-yellow",
+   "name": "Lemon Yellow",
+   "icon": "🟡",
+   "section": "pigments",
+   "hue": "warm",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "yellow-ochre",
+   "name": "Yellow Ochre",
+   "icon": "🟫",
+   "section": "pigments",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "raw-sienna",
+   "name": "Raw Sienna",
+   "icon": "🟤",
+   "section": "pigments",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "burnt-sienna",
+   "name": "Burnt Sienna",
+   "icon": "🟫",
+   "section": "pigments",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "raw-umber",
+   "name": "Raw Umber",
+   "icon": "🟤",
+   "section": "pigments",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "burnt-umber",
+   "name": "Burnt Umber",
+   "icon": "🟫",
+   "section": "pigments",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "venetian-red",
+   "name": "Venetian Red",
+   "icon": "🟥",
+   "section": "pigments",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "sap-green",
+   "name": "Sap Green",
+   "icon": "🟢",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "viridian",
+   "name": "Viridian",
+   "icon": "🟩",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "phthalo-green",
+   "name": "Phthalo Green",
+   "icon": "🟢",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "terre-verte",
+   "name": "Terre Verte",
+   "icon": "🟩",
+   "section": "pigments",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cerulean-blue",
+   "name": "Cerulean Blue",
+   "icon": "🔵",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cobalt-blue",
+   "name": "Cobalt Blue",
+   "icon": "🟦",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "ultramarine",
+   "name": "Ultramarine",
+   "icon": "🔵",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "prussian-blue",
+   "name": "Prussian Blue",
+   "icon": "🟦",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "phthalo-blue",
+   "name": "Phthalo Blue",
+   "icon": "🔵",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "indigo",
+   "name": "Indigo",
+   "icon": "🟦",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "dioxazine-purple",
+   "name": "Dioxazine Purple",
+   "icon": "🟣",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "quinacridone-magenta",
+   "name": "Quinacridone Magenta",
+   "icon": "🟪",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "paynes-grey",
+   "name": "Payne's Grey",
+   "icon": "⚫",
+   "section": "pigments",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "ivory-black",
+   "name": "Ivory Black",
+   "icon": "⬛",
+   "section": "pigments",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "mars-black",
+   "name": "Mars Black",
+   "icon": "⬛",
+   "section": "pigments",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "titanium-white",
+   "name": "Titanium White",
+   "icon": "⬜",
+   "section": "pigments",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "zinc-white",
+   "name": "Zinc White",
+   "icon": "⚪",
+   "section": "pigments",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "gold-leaf",
+   "name": "Gold Leaf",
+   "icon": "🥇",
+   "section": "pigments",
+   "hue": "metallic",
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "silver-leaf",
+   "name": "Silver Leaf",
+   "icon": "🥈",
+   "section": "pigments",
+   "hue": "metallic",
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "iridescent-medium",
+   "name": "Iridescent Medium",
+   "icon": "✨",
+   "section": "pigments",
+   "hue": "metallic",
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "lapis-lazuli",
+   "name": "Lapis Lazuli",
+   "icon": "💎",
+   "section": "pigments",
+   "hue": "cool",
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "gum-arabic",
+   "name": "Gum Arabic",
+   "icon": "🫙",
+   "section": "pigments",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "linseed-oil",
+   "name": "Linseed Oil",
+   "icon": "🧴",
+   "section": "pigments",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "gesso",
+   "name": "Gesso",
+   "icon": "🪣",
+   "section": "pigments",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "matte-medium",
+   "name": "Matte Medium",
+   "icon": "🫙",
+   "section": "pigments",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "india-ink",
+   "name": "India Ink",
+   "icon": "🖤",
+   "section": "pigments",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "walnut-ink",
+   "name": "Walnut Ink",
+   "icon": "🟤",
+   "section": "pigments",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "round-2",
+   "name": "Round No. 2",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "round-6",
+   "name": "Round No. 6",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "round-12",
+   "name": "Round No. 12",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "flat-4",
+   "name": "Flat No. 4",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "flat-10",
+   "name": "Flat No. 10",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "filbert-8",
+   "name": "Filbert No. 8",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "fan-brush",
+   "name": "Fan Brush",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "rigger-brush",
+   "name": "Rigger Brush",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "mop-brush",
+   "name": "Mop Brush",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "hake-brush",
+   "name": "Hake Brush",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "sable-liner",
+   "name": "Sable Liner",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "squirrel-quill",
+   "name": "Squirrel Quill",
+   "icon": "🪶",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "palette-knife",
+   "name": "Palette Knife",
+   "icon": "🔪",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "painting-knife",
+   "name": "Painting Knife",
+   "icon": "🔪",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "scraper",
+   "name": "Scraper",
+   "icon": "🔪",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "craft-knife",
+   "name": "Craft Knife",
+   "icon": "🔪",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "scissors",
+   "name": "Scissors",
+   "icon": "✂️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "hb-pencil",
+   "name": "HB Pencil",
+   "icon": "✏️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "2b-pencil",
+   "name": "2B Pencil",
+   "icon": "✏️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "6b-pencil",
+   "name": "6B Pencil",
+   "icon": "✏️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "mechanical-pencil",
+   "name": "Mechanical Pencil",
+   "icon": "✏️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "charcoal-stick",
+   "name": "Charcoal Stick",
+   "icon": "⚫",
+   "section": "brushes",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "compressed-charcoal",
+   "name": "Compressed Charcoal",
+   "icon": "⬛",
+   "section": "brushes",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "conte-crayon",
+   "name": "Conté Crayon",
+   "icon": "🖍️",
+   "section": "brushes",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "oil-pastel",
+   "name": "Oil Pastel",
+   "icon": "🖍️",
+   "section": "brushes",
+   "hue": "warm",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "soft-pastel",
+   "name": "Soft Pastel",
+   "icon": "🖍️",
+   "section": "brushes",
+   "hue": "cool",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "wax-crayon",
+   "name": "Wax Crayon",
+   "icon": "🖍️",
+   "section": "brushes",
+   "hue": "warm",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "graphite-stick",
+   "name": "Graphite Stick",
+   "icon": "✏️",
+   "section": "brushes",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "kneaded-eraser",
+   "name": "Kneaded Eraser",
+   "icon": "🧽",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "vinyl-eraser",
+   "name": "Vinyl Eraser",
+   "icon": "🧽",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "blending-stump",
+   "name": "Blending Stump",
+   "icon": "🖌️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "dip-pen",
+   "name": "Dip Pen",
+   "icon": "🖊️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "nib-set",
+   "name": "Nib Set",
+   "icon": "🖊️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "fineliner",
+   "name": "Fineliner",
+   "icon": "🖊️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "brush-pen",
+   "name": "Brush Pen",
+   "icon": "🖊️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "marker-set",
+   "name": "Marker Set",
+   "icon": "🖍️",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "ruling-pen",
+   "name": "Ruling Pen",
+   "icon": "📏",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "metal-ruler",
+   "name": "Metal Ruler",
+   "icon": "📏",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "brush-washer",
+   "name": "Brush Washer",
+   "icon": "🪣",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "airbrush",
+   "name": "Airbrush",
+   "icon": "💨",
+   "section": "brushes",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "hot-press-300",
+   "name": "Hot Press 300gsm",
+   "icon": "📄",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cold-press-300",
+   "name": "Cold Press 300gsm",
+   "icon": "📄",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "rough-300",
+   "name": "Rough 300gsm",
+   "icon": "📄",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "bristol-board",
+   "name": "Bristol Board",
+   "icon": "📄",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "newsprint-pad",
+   "name": "Newsprint Pad",
+   "icon": "📃",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cartridge-pad",
+   "name": "Cartridge Pad",
+   "icon": "🗒️",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "tracing-paper",
+   "name": "Tracing Paper",
+   "icon": "📃",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "vellum",
+   "name": "Vellum",
+   "icon": "📜",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "rice-paper",
+   "name": "Rice Paper",
+   "icon": "📜",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "washi-sheet",
+   "name": "Washi Sheet",
+   "icon": "📜",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "kraft-pad",
+   "name": "Kraft Pad",
+   "icon": "📒",
+   "section": "paper",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "black-card",
+   "name": "Black Card",
+   "icon": "⬛",
+   "section": "paper",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "watercolour-block",
+   "name": "Watercolour Block",
+   "icon": "📘",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "sketchbook-a5",
+   "name": "A5 Sketchbook",
+   "icon": "📔",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "sketchbook-a3",
+   "name": "A3 Sketchbook",
+   "icon": "📓",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "hardbound-journal",
+   "name": "Hardbound Journal",
+   "icon": "📕",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "accordion-book",
+   "name": "Accordion Book",
+   "icon": "📖",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "gridded-pad",
+   "name": "Gridded Pad",
+   "icon": "🗒️",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "dot-grid-pad",
+   "name": "Dot Grid Pad",
+   "icon": "🗒️",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "toned-grey-pad",
+   "name": "Toned Grey Pad",
+   "icon": "📃",
+   "section": "paper",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "toned-tan-pad",
+   "name": "Toned Tan Pad",
+   "icon": "📃",
+   "section": "paper",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "pastel-paper",
+   "name": "Pastel Paper",
+   "icon": "📄",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "printmaking-paper",
+   "name": "Printmaking Paper",
+   "icon": "📄",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cotton-rag",
+   "name": "Cotton Rag Sheet",
+   "icon": "📄",
+   "section": "paper",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "handmade-deckle",
+   "name": "Handmade Deckle Sheet",
+   "icon": "📜",
+   "section": "paper",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "stretched-canvas-s",
+   "name": "Stretched Canvas 8\"",
+   "icon": "🖼️",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "stretched-canvas-m",
+   "name": "Stretched Canvas 16\"",
+   "icon": "🖼️",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "stretched-canvas-l",
+   "name": "Stretched Canvas 36\"",
+   "icon": "🖼️",
+   "section": "paper",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "canvas-roll",
+   "name": "Canvas Roll",
+   "icon": "🧻",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "canvas-panel",
+   "name": "Canvas Panel",
+   "icon": "🖼️",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "linen-panel",
+   "name": "Linen Panel",
+   "icon": "🖼️",
+   "section": "paper",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "wood-cradle",
+   "name": "Wood Cradle Board",
+   "icon": "🪵",
+   "section": "paper",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "stretcher-bars",
+   "name": "Stretcher Bars",
+   "icon": "📏",
+   "section": "paper",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "mount-board",
+   "name": "Mount Board",
+   "icon": "🖼️",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "foam-board",
+   "name": "Foam Board",
+   "icon": "⬜",
+   "section": "paper",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "acetate-sheet",
+   "name": "Acetate Sheet",
+   "icon": "📃",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "masking-tape",
+   "name": "Masking Tape",
+   "icon": "🏷️",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "glassine",
+   "name": "Glassine Sheet",
+   "icon": "📃",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "portfolio-case",
+   "name": "Portfolio Case",
+   "icon": "💼",
+   "section": "paper",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "drawing-board",
+   "name": "Drawing Board",
+   "icon": "🪵",
+   "section": "paper",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "7-inch-single",
+   "name": "7\" Single",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "10-inch-ep",
+   "name": "10\" EP",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "12-inch-lp",
+   "name": "12\" LP",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "180g-pressing",
+   "name": "180g Pressing",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "picture-disc",
+   "name": "Picture Disc",
+   "icon": "📀",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "coloured-vinyl",
+   "name": "Coloured Vinyl",
+   "icon": "🟠",
+   "section": "vinyl",
+   "hue": "warm",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "clear-vinyl",
+   "name": "Clear Vinyl",
+   "icon": "⚪",
+   "section": "vinyl",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "white-label",
+   "name": "White Label",
+   "icon": "⬜",
+   "section": "vinyl",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "test-pressing",
+   "name": "Test Pressing",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "dub-plate",
+   "name": "Dub Plate",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "acetate-disc",
+   "name": "Acetate Disc",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cassette-c60",
+   "name": "C60 Cassette",
+   "icon": "📼",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cassette-c90",
+   "name": "C90 Cassette",
+   "icon": "📼",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "chrome-tape",
+   "name": "Chrome Tape",
+   "icon": "📼",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "metal-tape",
+   "name": "Metal Tape",
+   "icon": "📼",
+   "section": "vinyl",
+   "hue": "metallic",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "reel-to-reel",
+   "name": "Reel-to-Reel Tape",
+   "icon": "📼",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "dat-tape",
+   "name": "DAT Tape",
+   "icon": "📼",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "minidisc",
+   "name": "MiniDisc",
+   "icon": "💽",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cd-r",
+   "name": "CD-R",
+   "icon": "📀",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "jewel-case",
+   "name": "Jewel Case",
+   "icon": "📀",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "gatefold-sleeve",
+   "name": "Gatefold Sleeve",
+   "icon": "📁",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "inner-sleeve",
+   "name": "Inner Sleeve",
+   "icon": "📁",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "poly-outer",
+   "name": "Poly Outer",
+   "icon": "📁",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "record-crate",
+   "name": "Record Crate",
+   "icon": "📦",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "45-adapter",
+   "name": "45 Adapter",
+   "icon": "⭕",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "slipmat",
+   "name": "Slipmat",
+   "icon": "⬛",
+   "section": "vinyl",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "lacquer-master",
+   "name": "Lacquer Master",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "flexi-disc",
+   "name": "Flexi Disc",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "box-set",
+   "name": "Box Set",
+   "icon": "📦",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "zine-insert",
+   "name": "Zine Insert",
+   "icon": "📄",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "lyric-sheet",
+   "name": "Lyric Sheet",
+   "icon": "📄",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "obi-strip",
+   "name": "Obi Strip",
+   "icon": "🏷️",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "record-brush",
+   "name": "Record Brush",
+   "icon": "🖌️",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "vinyl-cleaner",
+   "name": "Vinyl Cleaner",
+   "icon": "🧴",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "sleeve-sticker",
+   "name": "Sleeve Sticker",
+   "icon": "🏷️",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "promo-copy",
+   "name": "Promo Copy",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "bootleg-lp",
+   "name": "Bootleg LP",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "field-recording-tape",
+   "name": "Field Recording Tape",
+   "icon": "📼",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "demo-cassette",
+   "name": "Demo Cassette",
+   "icon": "📼",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "shellac-78",
+   "name": "Shellac 78",
+   "icon": "💿",
+   "section": "vinyl",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "xlr-cable",
+   "name": "XLR Cable",
+   "icon": "🔌",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "trs-cable",
+   "name": "TRS Cable",
+   "icon": "🔌",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "ts-instrument-cable",
+   "name": "TS Instrument Cable",
+   "icon": "🔌",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "rca-pair",
+   "name": "RCA Pair",
+   "icon": "🔌",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "midi-cable",
+   "name": "MIDI Cable",
+   "icon": "🔌",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "usb-c-cable",
+   "name": "USB-C Cable",
+   "icon": "🔌",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "patch-cable",
+   "name": "Patch Cable",
+   "icon": "🔌",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "speakon-cable",
+   "name": "Speakon Cable",
+   "icon": "🔌",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "di-box",
+   "name": "DI Box",
+   "icon": "🧰",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "phantom-supply",
+   "name": "Phantom Supply",
+   "icon": "🔋",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "condenser-mic",
+   "name": "Condenser Mic",
+   "icon": "🎤",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "dynamic-mic",
+   "name": "Dynamic Mic",
+   "icon": "🎤",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "ribbon-mic",
+   "name": "Ribbon Mic",
+   "icon": "🎤",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "shotgun-mic",
+   "name": "Shotgun Mic",
+   "icon": "🎤",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "pop-filter",
+   "name": "Pop Filter",
+   "icon": "⭕",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "mic-stand",
+   "name": "Mic Stand",
+   "icon": "🎙️",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "shock-mount",
+   "name": "Shock Mount",
+   "icon": "🔗",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "closed-back-cans",
+   "name": "Closed-Back Headphones",
+   "icon": "🎧",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "open-back-cans",
+   "name": "Open-Back Headphones",
+   "icon": "🎧",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "iem-set",
+   "name": "In-Ear Monitors",
+   "icon": "🎧",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "studio-monitor",
+   "name": "Studio Monitor",
+   "icon": "🔊",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "subwoofer",
+   "name": "Subwoofer",
+   "icon": "🔊",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "monitor-stand",
+   "name": "Monitor Stand",
+   "icon": "🪵",
+   "section": "gear",
+   "hue": "earth",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "audio-interface",
+   "name": "Audio Interface",
+   "icon": "🎛️",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "preamp",
+   "name": "Preamp",
+   "icon": "🎛️",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "compressor-unit",
+   "name": "Compressor",
+   "icon": "🎚️",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "eq-unit",
+   "name": "EQ Unit",
+   "icon": "🎚️",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "reverb-pedal",
+   "name": "Reverb Pedal",
+   "icon": "🎛️",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "drum-machine",
+   "name": "Drum Machine",
+   "icon": "🥁",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "sampler",
+   "name": "Sampler",
+   "icon": "🎹",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "synth-module",
+   "name": "Synth Module",
+   "icon": "🎹",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "midi-keyboard",
+   "name": "MIDI Keyboard",
+   "icon": "🎹",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "turntable",
+   "name": "Turntable",
+   "icon": "💿",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "stylus",
+   "name": "Stylus",
+   "icon": "📍",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "mixer-4ch",
+   "name": "4-Channel Mixer",
+   "icon": "🎚️",
+   "section": "gear",
+   "hue": null,
+   "rarity": "premium",
+   "stamina": 0
+  },
+  {
+   "key": "cable-tester",
+   "name": "Cable Tester",
+   "icon": "🧰",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "gaff-tape",
+   "name": "Gaff Tape",
+   "icon": "🏷️",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "cable-ties",
+   "name": "Cable Ties",
+   "icon": "🔗",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "power-strip",
+   "name": "Power Strip",
+   "icon": "🔌",
+   "section": "gear",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "acoustic-panel",
+   "name": "Acoustic Panel",
+   "icon": "⬜",
+   "section": "gear",
+   "hue": "neutral",
+   "rarity": "common",
+   "stamina": 0
+  },
+  {
+   "key": "black-coffee",
+   "name": "Black Coffee",
+   "icon": "☕",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 12
+  },
+  {
+   "key": "flat-white",
+   "name": "Flat White",
+   "icon": "☕",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 14
+  },
+  {
+   "key": "espresso",
+   "name": "Espresso",
+   "icon": "☕",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 10
+  },
+  {
+   "key": "cold-brew",
+   "name": "Cold Brew",
+   "icon": "🧋",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 16
+  },
+  {
+   "key": "energy-drink",
+   "name": "Energy Drink",
+   "icon": "🥤",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 20
+  },
+  {
+   "key": "green-tea",
+   "name": "Green Tea",
+   "icon": "🍵",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 10
+  },
+  {
+   "key": "sandwich",
+   "name": "Sandwich",
+   "icon": "🥪",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 8
+  },
+  {
+   "key": "banana",
+   "name": "Banana",
+   "icon": "🍌",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 8
+  },
+  {
+   "key": "granola-bar",
+   "name": "Granola Bar",
+   "icon": "🍫",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 8
+  },
+  {
+   "key": "instant-noodles",
+   "name": "Instant Noodles",
+   "icon": "🍜",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 12
+  },
+  {
+   "key": "leftover-pizza",
+   "name": "Leftover Pizza",
+   "icon": "🍕",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 14
+  },
+  {
+   "key": "water-bottle",
+   "name": "Water",
+   "icon": "💧",
+   "section": "backroom",
+   "hue": null,
+   "rarity": "common",
+   "stamina": 6
+  }
+ ]
+}

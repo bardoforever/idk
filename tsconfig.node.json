@@ -1,0 +1,12 @@
+{
+  "//": "Tests and tools run under Node, not Metro, so they resolve node: builtins.",
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "customConditions": ["node"],
+    "types": ["node"],
+    "lib": ["ESNext"]
+  },
+  "include": ["tests/**/*.ts", "tools/**/*.ts", "src/content/**/*.ts", "src/game/**/*.ts"],
+  "exclude": ["node_modules"]
+}

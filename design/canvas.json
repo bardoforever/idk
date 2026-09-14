@@ -1,0 +1,16 @@
+{
+  "artboards": [
+    { "file": "Home.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "Shop home" },
+    { "file": "Main.dc.html", "x": 490, "y": 0, "w": 390, "h": 844, "title": "Live co-op shift" },
+    { "file": "Payout.dc.html", "x": 980, "y": 0, "w": 390, "h": 844, "title": "Payout + who did what" },
+    { "file": "Bills.dc.html", "x": 0, "y": 1010, "w": 390, "h": 844, "title": "Bill paid + perk pick" },
+    { "file": "SkillTree.dc.html", "x": 490, "y": 1010, "w": 390, "h": 844, "title": "Shared skill tree" },
+    { "file": "Roles.dc.html", "x": 980, "y": 1010, "w": 390, "h": 844, "title": "The Eye / The Ear" }
+  ],
+  "annotations": [
+    { "id": "what-this-is", "x": 0, "y": -170, "w": 880, "text": "THE CORNER SHOP — target state, all 5 slices finished.\nSlice 1 (the solo sorting loop) is built and playable today. Everything else here is the plan: bills, roles, live co-op, the shared tree.\nColours and metrics are lifted from the real app source, so what's built already looks exactly like this." },
+    { "id": "built-today", "x": 490, "y": -60, "w": 390, "text": "Built today — minus the co-op layer: no partner pills, no IN SYNC badge, no claimed item, no on-beat chip." },
+    { "id": "slice-3", "x": 980, "y": 900, "w": 390, "text": "Roles are slice 3. The Ear's audio items are the one piece needing real assets — short one-shots per item." }
+  ],
+  "launch": { "view": "canvas" }
+}
