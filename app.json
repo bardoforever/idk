@@ -21,7 +21,9 @@
       "package": "com.cornershop.game"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single"
     },
     "backgroundColor": "#F6F1E7"
   }

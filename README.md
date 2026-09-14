@@ -30,6 +30,19 @@ QR code at once — you just need to be on the same Wi-Fi as the computer runnin
 
 Not on the same network? Run `npx expo start --tunnel` instead.
 
+## Playing it without a computer
+
+The app also builds to a single static web bundle, which runs in a phone
+browser with no Metro server and no Expo Go:
+
+```bash
+npm run build:web     # -> dist/
+```
+
+`dist/index.html` plus the one JS file in `dist/_expo/` is the whole thing;
+host it anywhere static. Haptics are a no-op on web and the till total lives in
+that browser's local storage, but the game itself is identical.
+
 ## Checking it without a phone
 
 ```bash
