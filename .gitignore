@@ -42,3 +42,7 @@ yarn-error.*
 
 # Seeded design canvas (2.5MB, regenerated from design/*.dc.html)
 design/the-corner-shop-screens.html
+
+# Godot build output and import cache
+build/
+game/.godot/
