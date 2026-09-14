@@ -16,6 +16,7 @@ var _shift_label: Label
 var _cash_label: Label
 var _combo_label: Label
 var _streak_label: Label
+var _carry_panel: PanelContainer
 var _carry_box: VBoxContainer
 var _carry_title: Label
 var _perf_label: Label
@@ -99,23 +100,25 @@ func _ready() -> void:
 	clock_row.add_child(_shift_label)
 
 	# --- what you are holding ---
-	var carry_panel := PanelContainer.new()
-	carry_panel.set_anchors_preset(Control.PRESET_CENTER_RIGHT)
-	carry_panel.offset_right = -12
-	carry_panel.offset_left = -170
-	carry_panel.offset_top = -120
-	carry_panel.offset_bottom = 120
-	carry_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_carry_panel = PanelContainer.new()
+	_carry_panel.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	_carry_panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	_carry_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_carry_panel.offset_right = -12
+	_carry_panel.offset_bottom = -150
+	_carry_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var cstyle := StyleBoxFlat.new()
-	cstyle.bg_color = Color(1, 0.99, 0.97, 0.88)
+	cstyle.bg_color = Color("#FFFDF8")
 	cstyle.set_corner_radius_all(12)
 	cstyle.set_content_margin_all(10)
-	carry_panel.add_theme_stylebox_override("panel", cstyle)
-	root.add_child(carry_panel)
+	cstyle.border_color = Color("#E2D9C9")
+	cstyle.set_border_width_all(1)
+	_carry_panel.add_theme_stylebox_override("panel", cstyle)
+	root.add_child(_carry_panel)
 
 	_carry_box = VBoxContainer.new()
 	_carry_box.add_theme_constant_override("separation", 3)
-	carry_panel.add_child(_carry_box)
+	_carry_panel.add_child(_carry_box)
 	_carry_title = _small("ARMS EMPTY")
 	_carry_box.add_child(_carry_title)
 
@@ -132,9 +135,12 @@ func _ready() -> void:
 
 	# --- performance probe ---
 	_perf_label = _small("")
-	_perf_label.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
-	_perf_label.offset_left = 14
-	_perf_label.offset_top = -30
+	_perf_label.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	_perf_label.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_perf_label.offset_left = 16
+	_perf_label.offset_right = -16
+	_perf_label.offset_bottom = -14
+	_perf_label.add_theme_font_size_override("font_size", 12)
 	_perf_label.add_theme_color_override("font_color", MUTED)
 	root.add_child(_perf_label)
 
@@ -181,8 +187,8 @@ func set_carried(entries: Array, capacity: int) -> void:
 	for child in _carry_box.get_children():
 		if child != _carry_title:
 			child.queue_free()
+	_carry_panel.visible = not entries.is_empty()
 	if entries.is_empty():
-		_carry_title.text = "ARMS EMPTY"
 		return
 	_carry_title.text = "CARRYING %d/%d" % [entries.size(), capacity]
 	for i in entries.size():

@@ -15,6 +15,7 @@ var _flight_to := Vector3.ZERO
 var _flight_t := 0.0
 var _flight_len := 0.2
 var _spin := 0.0
+var _focused := false
 
 func setup(item_data: Dictionary, pos: Vector3) -> void:
 	item = item_data
@@ -55,6 +56,19 @@ func setup(item_data: Dictionary, pos: Vector3) -> void:
 func set_label_visible(on: bool) -> void:
 	if _label and _label.visible != on:
 		_label.visible = on
+
+## The one item a tap would pick up: it stands up, brightens, and its name is
+## the only one printed at full strength.
+func set_focused(on: bool) -> void:
+	if _focused == on or _mesh == null:
+		return
+	_focused = on
+	_mesh.scale = Vector3.ONE * (1.35 if on else 1.0)
+	_mesh.position.y = 0.16 if on else 0.0
+	if _label:
+		_label.modulate = Color("#2B2620") if on else Color(0.17, 0.15, 0.13, 0.45)
+		_label.outline_size = 20 if on else 10
+		_label.font_size = 76 if on else 56
 
 func fly_to_player(target: Vector3) -> void:
 	_begin_flight(target, Cfg.PICKUP_FLIGHT)

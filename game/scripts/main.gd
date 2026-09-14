@@ -81,7 +81,10 @@ func _build_world() -> void:
 	add_child(sun)
 
 	camera = Camera3D.new()
-	camera.fov = 48.0
+	camera.fov = Cfg.CAMERA_FOV
+	# Fix the HORIZONTAL field; a taller screen then shows more shop, rather
+	# than a narrower one showing less.
+	camera.keep_aspect = Camera3D.KEEP_WIDTH
 	add_child(camera)
 
 func _on_joystick(direction: Vector2) -> void:
@@ -115,8 +118,8 @@ func _process(delta: float) -> void:
 	_update_hud(delta)
 
 func _follow_camera(delta: float) -> void:
-	var target := player.global_position + Vector3(0, 15.5, 11.0)
-	camera.global_position = camera.global_position.lerp(target, clamp(delta * 6.0, 0.0, 1.0))
+	var target := player.global_position + Vector3(0, Cfg.CAMERA_HEIGHT, Cfg.CAMERA_BACK)
+	camera.global_position = camera.global_position.lerp(target, clamp(delta * Cfg.CAMERA_LAG, 0.0, 1.0))
 	camera.look_at(player.global_position + Vector3(0, 1.0, 0), Vector3.UP)
 
 # ---------------------------------------------------------------- tapping ---
@@ -311,20 +314,44 @@ func _highlight_shelves() -> void:
 	for shelf in shop.shelves:
 		shelf.set_highlighted(shelf.section_key == wanted)
 
-## Only label what you could plausibly read, so the floor stays quiet.
+## Label only what you can actually reach, and mark the single item a tap
+## would take. Labelling everything nearby turned the floor into a wall of
+## overlapping text.
 func _nearby_labels(delta: float) -> void:
 	_label_tick -= delta
 	if _label_tick > 0.0:
 		return
-	_label_tick = 0.1
+	_label_tick = 0.08
+
+	var focus := _nearest_reachable()
+	var reach_sq := Cfg.PICKUP_REACH * Cfg.PICKUP_REACH
 	var origin := player.global_position
+
 	for p in shop.floor_items:
 		if not is_instance_valid(p):
 			continue
-		if p.state == Pickup.State.ON_FLOOR:
-			p.set_label_visible(origin.distance_squared_to(p.global_position) < 36.0)
-		elif p.state != Pickup.State.CARRIED:
+		if p.state != Pickup.State.ON_FLOOR:
 			p.set_label_visible(false)
+			p.set_focused(false)
+			continue
+		var within: bool = origin.distance_squared_to(p.global_position) <= reach_sq
+		p.set_label_visible(within)
+		p.set_focused(p == focus)
+
+func _nearest_reachable() -> Pickup:
+	if carried.size() >= Cfg.CARRY_CAPACITY:
+		return null
+	var reach_sq := Cfg.PICKUP_REACH * Cfg.PICKUP_REACH
+	var best: Pickup = null
+	var best_dist := INF
+	for p in shop.floor_items:
+		if not is_instance_valid(p) or p.state != Pickup.State.ON_FLOOR:
+			continue
+		var d := player.global_position.distance_squared_to(p.global_position)
+		if d <= reach_sq and d < best_dist:
+			best_dist = d
+			best = p
+	return best
 
 func _update_hud(delta: float) -> void:
 	hud.set_cash(cash_cents)

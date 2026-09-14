@@ -2,6 +2,16 @@ extends Node
 ## Tuning for the walking sorting loop. Slice 1 numbers are about FEEL,
 ## not balance - the economy gets retuned against a clock in slice 3.
 
+# --- camera ---
+## Godot's fov is VERTICAL by default, and on a portrait phone vertical is the
+## LONG axis - so a vertical fov collapses the horizontal view to a slot. The
+## camera uses KEEP_WIDTH instead, so this fov governs how much shop you see
+## ACROSS, and portrait simply gives you more of it lengthwise.
+const CAMERA_FOV := 50.0
+const CAMERA_HEIGHT := 17.0
+const CAMERA_BACK := 12.0
+const CAMERA_LAG := 6.0
+
 # --- movement ---
 const MOVE_SPEED := 6.0          ## metres/sec at rank 0
 const ACCEL := 40.0              ## how fast you reach top speed

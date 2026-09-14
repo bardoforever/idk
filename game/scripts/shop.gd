@@ -104,7 +104,7 @@ func spawn_piles(count_per_pile: int) -> void:
 	for spot: Vector2 in PILE_SPOTS:
 		for i in count_per_pile:
 			var angle := _rng.randf() * TAU
-			var dist := _rng.randf() * 2.4
+			var dist := _rng.randf() * 1.5
 			var pos := spot + Vector2(cos(angle), sin(angle)) * dist
 			_spawn_item(pos)
 
@@ -124,7 +124,7 @@ func top_up(target: int) -> void:
 	while loose < target:
 		var spot: Vector2 = PILE_SPOTS[_rng.randi() % PILE_SPOTS.size()]
 		var angle := _rng.randf() * TAU
-		_spawn_item(spot + Vector2(cos(angle), sin(angle)) * _rng.randf() * 2.4)
+		_spawn_item(spot + Vector2(cos(angle), sin(angle)) * _rng.randf() * 1.5)
 		loose += 1
 
 func shelf_for(section_key: String) -> Shelf:
