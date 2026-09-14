@@ -2,7 +2,7 @@ extends Node3D
 class_name Pickup
 ## One item, from the floor, into your arms, onto a shelf.
 
-enum State { ON_FLOOR, FLYING_TO_PLAYER, CARRIED, FLYING_TO_SHELF, SHELVED }
+enum State { ON_FLOOR, FLYING_TO_PLAYER, CARRIED, FLYING_TO_SHELF, FLYING_TO_FLOOR, SHELVED }
 
 var item: Dictionary = {}
 var state: State = State.ON_FLOOR
@@ -64,6 +64,17 @@ func fly_to_shelf(target: Vector3) -> void:
 	_begin_flight(target, Cfg.DELIVER_FLIGHT)
 	state = State.FLYING_TO_SHELF
 	set_label_visible(false)
+
+## A wrong sort: tossed back onto the floor where you tried it. Nothing is
+## lost - the shop is just messier than it was, and that is your doing.
+func fly_to_floor(target: Vector3) -> void:
+	_begin_flight(target, Cfg.DELIVER_FLIGHT)
+	state = State.FLYING_TO_FLOOR
+	set_label_visible(false)
+
+func land_on_floor() -> void:
+	state = State.ON_FLOOR
+	carry_index = 0
 
 func _begin_flight(target: Vector3, length: float) -> void:
 	_flight_from = global_position

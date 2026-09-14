@@ -4,6 +4,7 @@ class_name HUD
 ## read what you are holding - the floor is for routing, this is for knowing.
 
 signal joystick_moved(direction: Vector2)
+signal world_tapped(screen_position: Vector2)
 
 const INK := Color("#2B2620")
 const PAPER := Color("#F6F1E7")
@@ -14,6 +15,7 @@ var _shift_fill: ColorRect
 var _shift_label: Label
 var _cash_label: Label
 var _combo_label: Label
+var _streak_label: Label
 var _carry_box: VBoxContainer
 var _carry_title: Label
 var _perf_label: Label
@@ -65,6 +67,9 @@ func _ready() -> void:
 	_combo_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_combo_label.add_theme_color_override("font_color", MUTED)
 	combo_col.add_child(_combo_label)
+	_streak_label = _small("no streak")
+	_streak_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	combo_col.add_child(_streak_label)
 
 	# --- shift clock ---
 	var clock_row := HBoxContainer.new()
@@ -133,12 +138,14 @@ func _ready() -> void:
 	_perf_label.add_theme_color_override("font_color", MUTED)
 	root.add_child(_perf_label)
 
-	# --- the thumb pad: lower 45% of the screen ---
+	# --- the thumb pad: the whole screen, so a tap anywhere reaches the shop ---
 	var stick := Joystick.new()
-	stick.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	stick.offset_top = -0.45 * ProjectSettings.get_setting("display/window/size/viewport_height")
+	stick.set_anchors_preset(Control.PRESET_FULL_RECT)
 	stick.moved.connect(func(d: Vector2) -> void: joystick_moved.emit(d))
+	stick.tapped.connect(func(p: Vector2) -> void: world_tapped.emit(p))
 	root.add_child(stick)
+	# The pad sits behind the panels so it never steals a tap from them.
+	root.move_child(stick, 0)
 
 func _small(text: String) -> Label:
 	var l := Label.new()
@@ -157,9 +164,10 @@ func _big(text: String, size: int) -> Label:
 func set_cash(cents: int) -> void:
 	_cash_label.text = "$%0.2f" % (cents / 100.0)
 
-func set_combo(multiplier: float) -> void:
+func set_combo(multiplier: float, streak: int) -> void:
 	_combo_label.text = "%0.2fx" % multiplier
 	_combo_label.add_theme_color_override("font_color", ACCENT if multiplier > 1.0 else MUTED)
+	_streak_label.text = ("%d in a row" % streak) if streak > 0 else "no streak"
 
 func set_shift(remaining: float, total: float) -> void:
 	var ratio: float = clamp(remaining / total, 0.0, 1.0)
@@ -168,19 +176,21 @@ func set_shift(remaining: float, total: float) -> void:
 	_shift_fill.color = Color("#B4544A") if ratio < 0.2 else ACCENT
 	_shift_label.text = "%d:%02d" % [int(remaining) / 60, int(remaining) % 60]
 
-func set_carried(names: Array, capacity: int) -> void:
+## The first entry is what the next shelf tap will place, so it is marked.
+func set_carried(entries: Array, capacity: int) -> void:
 	for child in _carry_box.get_children():
 		if child != _carry_title:
 			child.queue_free()
-	if names.is_empty():
+	if entries.is_empty():
 		_carry_title.text = "ARMS EMPTY"
 		return
-	_carry_title.text = "CARRYING %d/%d" % [names.size(), capacity]
-	for n in names:
+	_carry_title.text = "CARRYING %d/%d" % [entries.size(), capacity]
+	for i in entries.size():
+		var entry: Dictionary = entries[i]
 		var l := Label.new()
-		l.text = String(n)
-		l.add_theme_font_size_override("font_size", 13)
-		l.add_theme_color_override("font_color", INK)
+		l.text = ("> " if i == 0 else "   ") + String(entry["name"])
+		l.add_theme_font_size_override("font_size", 13 if i == 0 else 12)
+		l.add_theme_color_override("font_color", ACCENT if i == 0 else MUTED)
 		l.autowrap_mode = TextServer.AUTOWRAP_OFF
 		l.clip_text = true
 		_carry_box.add_child(l)
