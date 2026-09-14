@@ -3,6 +3,11 @@
 A cozy two-player co-op **shop-sorting game you walk around**.
 Top-down/isometric, portrait, one thumb, Godot 4.6.
 
+> **v3.1** fixes two mechanics v3 got wrong: it made auto-pickup the default
+> and deleted the wrong-sort penalty. Both contradicted the brief — auto-pickup
+> and streak forgiveness were listed there as *upgrades*, and "wrong sorts cost
+> time and a small fee" was explicit. Restored.
+>
 > **v3 is a correction, not an iteration.** v1 and v2 described a
 > tap-a-tile board game. That was a misread of the references. The real
 > genre — Sort Them Ducks, Supermarket Chaos — is *spatial*: you are a person
@@ -44,22 +49,16 @@ The shop is bigger than the screen; the camera scrolls with you.
    Items that don't belong stay in your arms.
 5. The shelf **visibly fills**. Repeat until the shift meter runs out.
 
-**There is no wrong-shelf penalty, and no mistake button.** A shelf simply
-doesn't take what isn't its. The cost of not knowing where something goes is
-that you walked across the shop for nothing — and shift time is the scarce
-resource. This is both cosier and truer to the references than v2's fee.
+**A wrong shelf costs you.** A fee, a few seconds, and your streak — and the
+item lands back on the floor at your feet, so you have made the shop messier
+than it was. Nothing is destroyed; you just have to come back for it.
 
-That deletes v2's "streak forgiveness" upgrade. Replaced below.
+### Combo
 
-### Combo, respun for a game with a floor
-
-Multiplier climbs with each item delivered and **decays if you go more than
-~6 seconds without delivering one**. Standing still or walking empty-handed
-bleeds it.
-
-So the skill is *routing*: fill your arms with a mixed load, then chain
-deliveries across several aisles without a gap. Carry capacity, move speed
-and knowing the shop all feed the same number. That is the game.
+A streak of **correct** sorts. Five in a row steps the multiplier up, to a 3.0×
+ceiling. A wrong sort breaks it — which is exactly what makes *Streak
+Forgiveness* worth buying: it absorbs a number of mistakes per shift without
+breaking the run.
 
 ### Shift meter
 
@@ -108,7 +107,7 @@ problem in this design.
 | Branch | Node | What it does on the floor |
 |---|---|---|
 | **HANDS** | Carry Capacity | Taller visible stack. Fewer trips. |
-| | Auto-Pickup | Wider magnet radius; items leap to you. |
+| | **Auto-Pickup** | Items within a radius come to you untapped. Off until bought. |
 | | Fast Hands | Items unload onto the shelf quicker. |
 | **FEET** | Move Speed | You cover the shop faster. |
 | | Sprint | Burst of speed; costs shift time. |
@@ -119,10 +118,12 @@ problem in this design.
 | **HEART** | Shift Length | Longer opening hours. |
 | | Barista | Coffee gives more back. |
 | | Second Wind | One free top-up per shift. |
+| | **Streak Forgiveness** | Mistakes per shift that do not break your streak. |
 | | Shared Nerve | Co-op: partner's delivery feeds your combo. |
 
-FEET is new and only exists because there's a floor. Streak Forgiveness is
-gone — there are no mistakes to forgive.
+FEET is new and only exists because there's a floor. Auto-Pickup and Streak
+Forgiveness are here as **upgrades**, which is what the brief always said they
+were — and the reason the base game must ship without either of them.
 
 ---
 
